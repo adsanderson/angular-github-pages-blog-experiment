@@ -293,8 +293,40 @@ module.exports = function (grunt) {
           ]
         }
       }
-    }
+    },
+    gitFiles: {}
   });
+
+  // custom task
+  // grunt.registerTask( "gitFiles",
+  //         "Generate a list of authors in order of first contribution",
+  // function( dir ) {
+  //         var done = this.async();
+  //         dir = dir || ".";
+
+  //         grunt.util.spawn({
+  //                 cmd: "git",
+  //                 // args: [ "log", "--pretty=%aN <%aE>", dir ]
+  //                 args: ["ls-files"]
+  //         }, function( err, result ) {
+  //                 if ( err ) {
+  //                         grunt.log.error( err );
+  //                         return done( false );
+  //                 }
+
+  //                 var authors,
+  //                         tracked = {};
+  //                 authors = result.stdout.split( "\n" ).reverse().filter(function( author ) {
+  //                         var first = !tracked[ author ];
+  //                         tracked[ author ] = true;
+  //                         return first;
+  //                 }).join( "\n" );
+  //                 grunt.log.writeln( authors );
+  //                 done();
+  //         });
+  // });
+
+
 
   grunt.registerTask('server', function (target) {
     if (target === 'dist') {
