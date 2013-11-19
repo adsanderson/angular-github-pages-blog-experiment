@@ -7,7 +7,7 @@
 // use this if you want to recursively match all subfolders:
 // 'test/spec/**/*.js'
 
-module.exports = function (grunt) {
+module.exports = function(grunt) {
   require('load-grunt-tasks')(grunt);
   require('time-grunt')(grunt);
 
@@ -293,42 +293,60 @@ module.exports = function (grunt) {
           ]
         }
       }
-    },
-    gitFiles: {}
+    }
   });
 
   // custom task
-  // grunt.registerTask( "gitFiles",
-  //         "Generate a list of authors in order of first contribution",
-  // function( dir ) {
-  //         var done = this.async();
-  //         dir = dir || ".";
+  grunt.registerTask("gitFiles", "Generate a list of authors in order of first contribution", function(dir) {
+    var done = this.async();
+    dir = dir || ".";
 
-  //         grunt.util.spawn({
-  //                 cmd: "git",
-  //                 // args: [ "log", "--pretty=%aN <%aE>", dir ]
-  //                 args: ["ls-files"]
-  //         }, function( err, result ) {
-  //                 if ( err ) {
-  //                         grunt.log.error( err );
-  //                         return done( false );
-  //                 }
+    grunt.util.spawn({
+      cmd: "git",
+      // args: [ "log", "--pretty=%aN <%aE>", dir ]
+      args: ["ls-files", 'app/posts']
+    }, function(err, result) {
+      if (err) {
+        grunt.log.error(err);
+        return done(false);
+      }
 
-  //                 var authors,
-  //                         tracked = {};
-  //                 authors = result.stdout.split( "\n" ).reverse().filter(function( author ) {
-  //                         var first = !tracked[ author ];
-  //                         tracked[ author ] = true;
-  //                         return first;
-  //                 }).join( "\n" );
-  //                 grunt.log.writeln( authors );
-  //                 done();
-  //         });
-  // });
+      // var authors,
+      //         tracked = {};
+      // authors = result.stdout.split( "\n" ).reverse().filter(function( author ) {
+      //         var first = !tracked[ author ];
+      //         tracked[ author ] = true;
+      //         return first;
+      // }).join( "\n" );
+
+      var files = result.stdout.split( "\n" );
+
+      for (var i = files.length - 1; i >= 0; i--) {
+        grunt.log.writeln('test: ' + files[i]);
+        grunt.util.spawn({
+          cmd: "git",
+          // args: [ "log", "--pretty=%aN <%aE>", dir ]
+          args: ['rev-list', 'HEAD', files[i]]
+        }, function(err, result) {
+          if (err) {
+            grunt.log.error(err);
+            return done(false);
+          }
+          var sha = result.stdout;
+          grunt.log.writeln(sha);          
+        });
+      }
+
+      grunt.log.writeln(files);
+      done();
+
+
+    });
+  });
 
 
 
-  grunt.registerTask('server', function (target) {
+  grunt.registerTask('server', function(target) {
     if (target === 'dist') {
       return grunt.task.run(['build', 'connect:dist:keepalive']);
     }
