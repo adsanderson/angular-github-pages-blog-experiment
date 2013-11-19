@@ -4,7 +4,8 @@ angular.module('qdaghpApp', [
   'ngCookies',
   'ngResource',
   'ngSanitize',
-  'ngRoute'
+  'ngRoute',
+  'testtest'
 ])
   .config(function ($routeProvider) {
     $routeProvider
