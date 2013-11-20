@@ -5,7 +5,7 @@ angular.module('qdaghpApp', [
   'ngResource',
   'ngSanitize',
   'ngRoute',
-  'testtest'
+  'adsMetadata'
 ])
   .config(function ($routeProvider) {
     $routeProvider
