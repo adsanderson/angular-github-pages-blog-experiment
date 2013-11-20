@@ -299,6 +299,8 @@ module.exports = function(grunt) {
   // custom task
   grunt.registerTask("gitFiles", "Generate a list of authors in order of first contribution", function(dir) {
     var done = this.async();
+    var async = require('async');
+
     dir = dir || ".";
 
     grunt.util.spawn({
@@ -311,40 +313,41 @@ module.exports = function(grunt) {
         return done(false);
       }
 
-      // var authors,
-      //         tracked = {};
-      // authors = result.stdout.split( "\n" ).reverse().filter(function( author ) {
-      //         var first = !tracked[ author ];
-      //         tracked[ author ] = true;
-      //         return first;
-      // }).join( "\n" );
+      var files = result.stdout.split("\n");
+      var fileMetaData = [];
 
-      var files = result.stdout.split( "\n" );
-
-      for (var i = files.length - 1; i >= 0; i--) {
-        grunt.log.writeln('test: ' + files[i]);
+      function processFile(item, callback) {
+        grunt.log.writeln('building meta data for: ' + item);
         grunt.util.spawn({
-          cmd: "git",
-          // args: [ "log", "--pretty=%aN <%aE>", dir ]
-          args: ['rev-list', 'HEAD', files[i]]
-        }, function(err, result) {
-          if (err) {
-            grunt.log.error(err);
-            return done(false);
-          }
-          var sha = result.stdout;
-          grunt.log.writeln(sha);          
-        });
+            cmd: "git",
+            args: ['log', '--format=%aD|%an', item]
+          },
+          function(err, result) {
+            if (err) {
+              grunt.log.error(err);
+              return done(false);
+            }
+            var sha = result.stdout;
+            var historyArray = result.stdout.split("\n");
+            var creationDataString = historyArray.pop();
+            var creationDataObj = {
+              file: item,
+              author: creationDataString.split('|')[1],
+              creationDate: creationDataString.split('|')[0]
+            }
+            fileMetaData.push(creationDataObj);
+            grunt.log.writeln('meta data for: ' + item + ' created');
+            callback();
+          });
       }
 
-      grunt.log.writeln(files);
-      done();
-
-
+      async.eachSeries(files, processFile, function(err) {
+        grunt.file.write('app/data/metaData.json', JSON.stringify(fileMetaData));
+        grunt.log.writeln('metaData.json created');
+        done();
+      });
     });
   });
-
-
 
   grunt.registerTask('server', function(target) {
     if (target === 'dist') {
