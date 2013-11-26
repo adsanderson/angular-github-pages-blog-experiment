@@ -7,8 +7,10 @@ angular.module('adsMetadata', [])
 	'use strict';
 
 	return {
+		metaData: undefined,
 		getMetaData: function() {
-			var promise = $http.jsonp('data/metadata.json').then(function (response) {
+			var self = this;
+			var promise = $http.get('data/metadata.json').then(function (response) {
 				return response;
 			});
 			return promise;
