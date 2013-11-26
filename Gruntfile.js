@@ -293,6 +293,32 @@ module.exports = function(grunt) {
           ]
         }
       }
+    },
+    markdown: {
+      all: {
+        files: [
+          {
+            expand: true,
+            src: '<%= yeoman.app %>/posts/*.md',
+            dest: 'app/posts/html/',
+            ext: '.html'
+          }
+        ],
+        options: {
+          // template: 'myTemplate.jst',
+          // preCompile: function(src, context) {},
+          // postCompile: function(src, context) {},
+          // templateContext: {},
+          markdownOptions: {
+            gfm: true,
+            // highlight: manual,
+            // codeLines: {
+            //   before: '<span>',
+            //   after: '</span>'
+            // }
+          }
+        }
+      }
     }
   });
 
