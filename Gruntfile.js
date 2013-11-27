@@ -359,10 +359,10 @@ module.exports = function(grunt) {
             var creationDataString = historyArray.pop();
             var creationDataObj = {
               file: item,
-              title: path.basename(item, '.md').replace('-', ' '),
-              compiledPost: 'app/compiledPost/' + path.basename(item, '.md') + '.html',
+              title: path.basename(item, '.md').replace(/[_-]/g, ' '),
+              compiledPost: path.basename(item, '.md'),
               author: creationDataString.split('|')[1],
-              creationDate: creationDataString.split('|')[0]
+              creationDate: Date.parse(creationDataString.split('|')[0])
             }
             fileMetaData.push(creationDataObj);
             grunt.log.writeln('meta data for: ' + item + ' created');
