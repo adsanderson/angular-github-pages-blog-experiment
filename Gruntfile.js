@@ -300,12 +300,12 @@ module.exports = function(grunt) {
           {
             expand: true,
             src: '<%= yeoman.app %>/posts/*.md',
-            dest: 'app/posts/html/',
+            dest: 'app/compiledPost/',
             ext: '.html'
           }
         ],
         options: {
-          // template: 'myTemplate.jst',
+          template: '<%= yeoman.app %>/markdown-template/template.html',
           // preCompile: function(src, context) {},
           // postCompile: function(src, context) {},
           // templateContext: {},
@@ -326,6 +326,7 @@ module.exports = function(grunt) {
   grunt.registerTask("gitFiles", "Generate a list of authors in order of first contribution", function(dir) {
     var done = this.async();
     var async = require('async');
+    var path = require('path');
 
     dir = dir || ".";
 
@@ -358,6 +359,8 @@ module.exports = function(grunt) {
             var creationDataString = historyArray.pop();
             var creationDataObj = {
               file: item,
+              title: path.basename(item, '.md').replace('-', ' '),
+              compiledPost: 'app/compiledPost/' + path.basename(item, '.md') + '.html',
               author: creationDataString.split('|')[1],
               creationDate: creationDataString.split('|')[0]
             }
