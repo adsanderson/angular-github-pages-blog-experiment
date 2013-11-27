@@ -5,6 +5,7 @@ angular.module('qdaghpApp')
 
     metaData.getMetaData().then(function(data){
         $scope.metaThings = data.data;
+        metaData.metaData = data.data;
     });
 
   });

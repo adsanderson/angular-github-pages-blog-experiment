@@ -5,4 +5,6 @@ angular.module('adsPosts', [])
 
     $scope.postFile = 'compiledPost/app/posts/' + $routeParams.postFile + '.html';
 
+    $scope.test = metaData.metaData;
+
   });
