@@ -5,13 +5,18 @@ angular.module('qdaghpApp', [
   'ngResource',
   'ngSanitize',
   'ngRoute',
-  'adsMetadata'
+  'adsMetadata',
+  'adsPosts'
 ])
   .config(function ($routeProvider) {
     $routeProvider
       .when('/', {
         templateUrl: 'views/blog.html',
         controller: 'MainCtrl'
+      })
+      .when('/:postFile', {
+        templateUrl: 'views/post.html',
+        controller: 'postCtrl'
       })
       .otherwise({
         redirectTo: '/'
