@@ -229,7 +229,10 @@ module.exports = function(grunt) {
             '.htaccess',
             'bower_components/**/*',
             'images/{,*/}*.{gif,webp}',
-            'fonts/*'
+            'fonts/*',
+            'posts/*',
+            'compiledPost/**/*',
+            'data/*'
           ]
         }, {
           expand: true,
@@ -371,7 +374,7 @@ module.exports = function(grunt) {
       }
 
       async.eachSeries(files, processFile, function(err) {
-        grunt.file.write('app/data/metaData.json', JSON.stringify(fileMetaData));
+        grunt.file.write('app/data/metadata.json', JSON.stringify(fileMetaData));
         grunt.log.writeln('metaData.json created');
         done();
       });
@@ -413,6 +416,12 @@ module.exports = function(grunt) {
     'uglify',
     'rev',
     'usemin'
+  ]);
+
+  grunt.registerTask('exp', [
+    'gitFiles',
+    'markdown',
+    'build'
   ]);
 
   grunt.registerTask('default', [
