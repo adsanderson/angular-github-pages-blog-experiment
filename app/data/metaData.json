@@ -1,1 +1,1 @@
-[{"file":"app/posts/2nd_markdown_post.md","author":"Adam Sanderson","creationDate":"Mon, 18 Nov 2013 22:56:03 +0000"},{"file":"app/posts/Test_markdown_post.md","author":"Adam Sanderson","creationDate":"Thu, 14 Nov 2013 16:51:35 +0000"}]
+[{"file":"app/posts/2nd_markdown_post.md","title":"2nd markdown post","compiledPost":"2nd_markdown_post","author":"Adam Sanderson","creationDate":1384815363000},{"file":"app/posts/Test_markdown_post.md","title":"Test markdown post","compiledPost":"Test_markdown_post","author":"Adam Sanderson","creationDate":1384447895000}]
