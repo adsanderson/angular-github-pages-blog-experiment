@@ -1,13 +1,18 @@
-<div class="jumbotron">
-	<!-- <h1>'Allo, 'Allo!</h1>
+<!-- <div class="jumbotron">
+	<h1>'Allo, 'Allo!</h1>
 	<p class="lead">Always a pleasure scaffolding your apps.</p>
-	<p><a class="btn btn-lg btn-success" href="#">Splendid!</a></p> -->
-</div>
+	<p><a class="btn btn-lg btn-success" href="#">Splendid!</a></p>
+</div> -->
 
-<div class="row marketing">
-	<ul ng-repeat="meta in metaThings">
+<div class="row">
+	<ul ng-repeat="meta in metaThings | orderBy:'creationDate':true">
 		<li>
-			{{meta.file}}
+			<h2>
+                <a ng-href="#/{{meta.compiledPost}}">{{meta.title}}</a>
+            </h2>
+            <p>
+                Date: {{meta.creationDate | date:'d/MM/yyyy'}} | Author: {{meta.author}}
+            </p>
 		</li>
 	</ul>
 </div>
