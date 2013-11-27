@@ -5,6 +5,7 @@ angular.module('qdaghpApp', [
   'ngResource',
   'ngSanitize',
   'ngRoute',
+  'lodash',
   'adsMetadata',
   'adsPosts'
 ])
