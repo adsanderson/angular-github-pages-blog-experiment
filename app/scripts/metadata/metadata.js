@@ -3,21 +3,22 @@
 // ]);
 
 angular.module('adsMetadata', [])
-	.factory('metadata', function($rootScope, $http) {
-    var metadata = {};
+	.factory('metadata', function ($rootScope, $http, _) {
+        'use strict';
+        var metadata = {};
 
-    metadata.data = {};
+        metadata.data = {};
 
-    //Gets the list of nuclear weapons
-    metadata.getMetaData = function() {
-    	if (typeof metadata.data.meta === 'undefined') {
-	        $http.get('data/metadata.json')
-	            .success(function(data) {
-	                metadata.data.meta = data;
-	            });
-        }
-        return metadata.data;
-    };
+        //Gets the list of nuclear weapons
+        metadata.getMetaData = function() {
+            if (typeof metadata.data.meta === 'undefined') {
+                $http.get('data/metadata.json')
+                    .success(function(data) {
+                        metadata.data.meta = _.sortBy(data, 'creationDate').reverse();
+                    });
+            }
+            return metadata.data;
+        };
 
-    return metadata;
-});
+        return metadata;
+    });
