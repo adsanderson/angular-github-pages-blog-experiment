@@ -5,7 +5,7 @@
 </div> -->
 
 <div class="row">
-	<ul ng-repeat="meta in metaThings | orderBy:'creationDate':true">
+	<ul ng-repeat="meta in metaThings.meta | orderBy:'creationDate':true">
 		<li>
 			<h2>
                 <a ng-href="#/{{meta.compiledPost}}">{{meta.title}}</a>
