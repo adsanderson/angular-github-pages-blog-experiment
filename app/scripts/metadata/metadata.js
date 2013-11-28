@@ -3,20 +3,21 @@
 // ]);
 
 angular.module('adsMetadata', [])
-	.factory('metaData', function ($http) {
-	'use strict';
+	.factory('metadata', function($rootScope, $http) {
+    var metadata = {};
 
-	var responseData = [{title:'test'}];
+    metadata.data = {};
 
-	return {
-		metaData: responseData,
-		getMetaData: function() {
-			var self = this;
-			var promise = $http.get('data/metadata.json').then(function (response) {
-				self.metaData = response.data;
-				return response;
-			});
-			return promise;
-		}
-	};
+    //Gets the list of nuclear weapons
+    metadata.getMetaData = function() {
+    	if (typeof metadata.data.meta === 'undefined') {
+	        $http.get('data/metadata.json')
+	            .success(function(data) {
+	                metadata.data.meta = data;
+	            });
+        }
+        return metadata.data;
+    };
+
+    return metadata;
 });
