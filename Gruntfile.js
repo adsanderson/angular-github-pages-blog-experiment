@@ -18,14 +18,14 @@ module.exports = function(grunt) {
       dist: 'dist'
     },
     watch: {
-      coffee: {
-        files: ['<%= yeoman.app %>/scripts/{,*/}*.coffee'],
-        tasks: ['coffee:dist']
-      },
-      coffeeTest: {
-        files: ['test/spec/{,*/}*.coffee'],
-        tasks: ['coffee:test']
-      },
+      // coffee: {
+      //   files: ['<%= yeoman.app %>/scripts/{,*/}*.coffee'],
+      //   tasks: ['coffee:dist']
+      // },
+      // coffeeTest: {
+      //   files: ['test/spec/{,*/}*.coffee'],
+      //   tasks: ['coffee:test']
+      // },
       styles: {
         files: ['<%= yeoman.app %>/styles/{,*/}*.css'],
         tasks: ['copy:styles', 'autoprefixer']
@@ -108,30 +108,30 @@ module.exports = function(grunt) {
         '<%= yeoman.app %>/scripts/{,*/}*.js'
       ]
     },
-    coffee: {
-      options: {
-        sourceMap: true,
-        sourceRoot: ''
-      },
-      dist: {
-        files: [{
-          expand: true,
-          cwd: '<%= yeoman.app %>/scripts',
-          src: '{,*/}*.coffee',
-          dest: '.tmp/scripts',
-          ext: '.js'
-        }]
-      },
-      test: {
-        files: [{
-          expand: true,
-          cwd: 'test/spec',
-          src: '{,*/}*.coffee',
-          dest: '.tmp/spec',
-          ext: '.js'
-        }]
-      }
-    },
+    // coffee: {
+    //   options: {
+    //     sourceMap: true,
+    //     sourceRoot: ''
+    //   },
+    //   dist: {
+    //     files: [{
+    //       expand: true,
+    //       cwd: '<%= yeoman.app %>/scripts',
+    //       src: '{,*/}*.coffee',
+    //       dest: '.tmp/scripts',
+    //       ext: '.js'
+    //     }]
+    //   },
+    //   test: {
+    //     files: [{
+    //       expand: true,
+    //       cwd: 'test/spec',
+    //       src: '{,*/}*.coffee',
+    //       dest: '.tmp/spec',
+    //       ext: '.js'
+    //     }]
+    //   }
+    // },
     // not used since Uglify task does concat,
     // but still available if needed
     /*concat: {
@@ -141,10 +141,10 @@ module.exports = function(grunt) {
       dist: {
         files: {
           src: [
-            '<%= yeoman.dist %>/scripts/{,*/}*.js',
-            '<%= yeoman.dist %>/styles/{,*/}*.css',
-            '<%= yeoman.dist %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}',
-            '<%= yeoman.dist %>/styles/fonts/*'
+            '<%= yeoman.dist %>/app/scripts/{,*/}*.js',
+            // '<%= yeoman.dist %>/styles/{,*/}*.css',
+            // '<%= yeoman.dist %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}',
+            // '<%= yeoman.dist %>/styles/fonts/*'
           ]
         }
       }
@@ -157,7 +157,7 @@ module.exports = function(grunt) {
     },
     usemin: {
       html: ['<%= yeoman.dist %>/{,*/}*.html'],
-      css: ['<%= yeoman.dist %>/styles/{,*/}*.css'],
+      // css: ['<%= yeoman.dist %>/app/styles/{,*/}*.css'],
       options: {
         assetsDirs: ['<%= yeoman.dist %>']
       }
@@ -211,8 +211,14 @@ module.exports = function(grunt) {
         files: [{
           expand: true,
           cwd: '<%= yeoman.app %>',
-          src: ['*.html', 'views/*.html'],
+          src: ['*.html'],
           dest: '<%= yeoman.dist %>'
+        },
+        {
+          expand: true,
+          cwd: '<%= yeoman.app %>/app',
+          src: ['views/*.html'],
+          dest: '<%= yeoman.dist %>/app'
         }]
       }
     },
@@ -223,16 +229,21 @@ module.exports = function(grunt) {
           expand: true,
           dot: true,
           cwd: '<%= yeoman.app %>',
+          dest: '<%= yeoman.dist %>/app',
+          src: [
+            // '*.{ico,png,txt}',
+            // '.htaccess',
+            // 'bower_components/**/*',
+            // 'images/{,*/}*.{gif,webp}',
+            // 'fonts/*'
+          ]
+        }, {
+          expand: true,
+          cwd: '<%= yeoman.app %>',
           dest: '<%= yeoman.dist %>',
           src: [
-            '*.{ico,png,txt}',
-            '.htaccess',
-            'bower_components/**/*',
-            'images/{,*/}*.{gif,webp}',
-            'fonts/*',
-            'posts/*',
-            'compiledPost/**/*',
-            'data/*'
+            'styles/*',
+            'fonts/*'
           ]
         }, {
           expand: true,
@@ -252,15 +263,15 @@ module.exports = function(grunt) {
     },
     concurrent: {
       server: [
-        'coffee:dist',
+        // 'coffee:dist',
         'copy:styles'
       ],
       test: [
-        'coffee',
+        // 'coffee',
         'copy:styles'
       ],
       dist: [
-        'coffee',
+        // 'coffee',
         'copy:styles',
         'imagemin',
         'svgmin',
@@ -282,103 +293,21 @@ module.exports = function(grunt) {
       dist: {
         files: [{
           expand: true,
-          cwd: '.tmp/concat/scripts',
+          cwd: '.tmp/concat/app/scripts',
           src: '*.js',
-          dest: '.tmp/concat/scripts'
+          dest: '.tmp/concat/app/scripts'
         }]
       }
     },
     uglify: {
       dist: {
         files: {
-          '<%= yeoman.dist %>/scripts/scripts.js': [
-            '<%= yeoman.dist %>/scripts/scripts.js'
+          '<%= yeoman.dist %>/app/scripts/scripts.js': [
+            '<%= yeoman.dist %>/app/scripts/scripts.js'
           ]
         }
       }
-    },
-    markdown: {
-      all: {
-        files: [
-          {
-            expand: true,
-            src: '<%= yeoman.app %>/posts/*.md',
-            dest: 'app/compiledPost/',
-            ext: '.html'
-          }
-        ],
-        options: {
-          template: '<%= yeoman.app %>/markdown-template/template.html',
-          // preCompile: function(src, context) {},
-          // postCompile: function(src, context) {},
-          // templateContext: {},
-          markdownOptions: {
-            gfm: true,
-            // highlight: manual,
-            // codeLines: {
-            //   before: '<span>',
-            //   after: '</span>'
-            // }
-          }
-        }
-      }
     }
-  });
-
-  // custom task
-  grunt.registerTask("gitFiles", "Generate a list of authors in order of first contribution", function(dir) {
-    var done = this.async();
-    var async = require('async');
-    var path = require('path');
-
-    dir = dir || ".";
-
-    grunt.util.spawn({
-      cmd: "git",
-      // args: [ "log", "--pretty=%aN <%aE>", dir ]
-      args: ["ls-files", 'app/posts']
-    }, function(err, result) {
-      if (err) {
-        grunt.log.error(err);
-        return done(false);
-      }
-
-      var files = result.stdout.split("\n");
-      var fileMetaData = [];
-
-      function processFile(item, callback) {
-        grunt.log.writeln('building meta data for: ' + item);
-        grunt.util.spawn({
-            cmd: "git",
-            args: ['log', '--format=%aD|%an', item]
-          },
-          function(err, result) {
-            if (err) {
-              grunt.log.error(err);
-              return done(false);
-            }
-            var sha = result.stdout;
-            var historyArray = result.stdout.split("\n");
-            var creationDataString = historyArray.pop();
-            var creationDataObj = {
-              file: item,
-              title: path.basename(item, '.md').replace(/[_-]/g, ' '),
-              compiledPost: path.basename(item, '.md'),
-              author: creationDataString.split('|')[1],
-              creationDate: Date.parse(creationDataString.split('|')[0])
-            }
-            fileMetaData.push(creationDataObj);
-            grunt.log.writeln('meta data for: ' + item + ' created');
-            callback();
-          });
-      }
-
-      async.eachSeries(files, processFile, function(err) {
-        grunt.file.write('app/data/metadata.json', JSON.stringify(fileMetaData));
-        grunt.log.writeln('metaData.json created');
-        done();
-      });
-    });
   });
 
   grunt.registerTask('server', function(target) {
@@ -412,7 +341,7 @@ module.exports = function(grunt) {
     'ngmin',
     'copy:dist',
     'cdnify',
-    'cssmin',
+    // 'cssmin',
     'uglify',
     'rev',
     'usemin'
