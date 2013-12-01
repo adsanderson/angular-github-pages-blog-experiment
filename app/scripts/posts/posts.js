@@ -2,7 +2,7 @@
 angular.module('adsPosts', [])
   .controller('postCtrl', function ($scope, $routeParams, $filter, metadata, _) {
 	'use strict';
-    $scope.postFile = 'compiledPost/app/posts/' + $routeParams.postFile + '.html';
+    $scope.postFile = 'app/data/posts/' + $routeParams.postFile + '.html';
     $scope.test = metadata.getMetaData();
   }).filter('prevNext', function ($routeParams, _) {
 	'use strict';
