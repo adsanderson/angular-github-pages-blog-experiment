@@ -228,7 +228,7 @@ module.exports = function(grunt) {
         files: [{
           expand: true,
           dot: true,
-          cwd: '<%= yeoman.app %>',
+          cwd: '<%= yeoman.app %>/app',
           dest: '<%= yeoman.dist %>/app',
           src: [
             // '*.{ico,png,txt}',
@@ -236,6 +236,7 @@ module.exports = function(grunt) {
             // 'bower_components/**/*',
             // 'images/{,*/}*.{gif,webp}',
             // 'fonts/*'
+            'markdown-template/*'
           ]
         }, {
           expand: true,
@@ -243,7 +244,9 @@ module.exports = function(grunt) {
           dest: '<%= yeoman.dist %>',
           src: [
             'styles/*',
-            'fonts/*'
+            'fonts/*',
+            'gruntfile.js',
+            'package.json'
           ]
         }, {
           expand: true,
@@ -272,9 +275,9 @@ module.exports = function(grunt) {
       ],
       dist: [
         // 'coffee',
-        'copy:styles',
-        'imagemin',
-        'svgmin',
+        // 'copy:styles',
+        // 'imagemin',
+        // 'svgmin',
         'htmlmin'
       ]
     },
@@ -307,6 +310,13 @@ module.exports = function(grunt) {
           ]
         }
       }
+    },
+    mkdir: {
+      all: {
+        options: {
+          create: ['<%= yeoman.dist %>/posts', '<%= yeoman.dist %>/drafts']
+        },
+      },
     }
   });
 
@@ -344,7 +354,8 @@ module.exports = function(grunt) {
     // 'cssmin',
     'uglify',
     'rev',
-    'usemin'
+    'usemin',
+    'mkdir'
   ]);
 
   grunt.registerTask('exp', [
