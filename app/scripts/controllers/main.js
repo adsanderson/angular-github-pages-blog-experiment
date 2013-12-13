@@ -11,4 +11,6 @@ angular.module('qdaghpApp')
 
     $scope.metaThings = metadata.getMetaData();
 
+    $scope.blogDetails = metadata.getBlogData();
+
   });

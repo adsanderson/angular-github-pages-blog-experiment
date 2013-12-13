@@ -12,11 +12,10 @@ angular.module('qdaghpApp', [
   .config(function ($routeProvider) {
     $routeProvider
       .when('/', {
-        templateUrl: 'app/views/blog.html',
-        controller: 'MainCtrl'
+        templateUrl: 'app/theme/views/blog.html'
       })
       .when('/:postFile', {
-        templateUrl: 'app/views/post.html',
+        templateUrl: 'app/theme/views/post.html',
         controller: 'postCtrl'
       })
       .otherwise({

@@ -1,0 +1,9 @@
+<!-- <div class="jumbotron">
+	<h1>'Allo, 'Allo!</h1>
+	<p class="lead">Always a pleasure scaffolding your apps.</p>
+	<p><a class="btn btn-lg btn-success" href="#">Splendid!</a></p>
+</div> -->
+<h2 ng-bind="test | title"></h2>
+<div class="row" ng-include="postFile">
+</div>
+<a ng-href="#/{{prevPost = (test | prevNext)}}" ng-show="prevPost">prev</a> | <a ng-href="#/{{nextPost = (test | prevNext:true)}}" ng-show="nextPost">next</a>
